@@ -117,6 +117,9 @@ USE_TZ = True
 
 USE_DJANGO_JQUERY = True
 
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
