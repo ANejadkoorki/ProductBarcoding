@@ -14,52 +14,70 @@
 </head>
 <body>
 
-<div class="container mt-4  col-4 align-content-center">
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.media.js }}
 
-        <div class="form-group">
-            <label for="id_name">Product Name : </label>
-            {% render_field form.name class='form-control'  %}
+<div class="container">
+    <div class="mt-3 mb-3">
+        <div class="col-12">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-primary alert-dismissible">
+                        {{ message }}
+                        <button type="button" data-dismiss="alert" class="close">&times;</button>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
-
-        <div class="form-group">
-            <label for="id_mother_category">Mother Category : </label>
-            {% render_field form.mother_category class='form-control'  %}
-        </div>
-
-        <div class="form-group">
-            <label for="id_second_category">Second Category : </label>
-            {% render_field form.second_category class='form-control'  %}
-        </div>
-
-        <div class="form-group">
-            <label for="id_third_category">Third Category : </label>
-            {% render_field form.third_category class='form-control'  %}
-        </div>
-
-        <div class="form-group">
-            <label for="id_colour">Colour : </label>
-            {% render_field form.colour class='form-control'  %}
-        </div>
-
-        <div class="form-group">
-            <label for="id_size">Size : </label>
-            {% render_field form.size class='form-control'  %}
-        </div>
-
-        <div class="form-group">
-            <label for="id_store">Store : </label>
-            {% render_field form.store class='form-control'  %}
-        </div>
-
-        <button type="submit" class="btn btn-primary">Create</button>
-
-
-    </form>
+    </div>
 </div>
 
+
+{% if form %}
+    <div class="container mt-4  col-4 align-content-center">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media.js }}
+
+            <div class="form-group">
+                <label for="id_name">Product Name : </label>
+                {% render_field form.name class='form-control' %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_mother_category">Mother Category : </label>
+                {% render_field form.mother_category class='form-control' %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_second_category">Second Category : </label>
+                {% render_field form.second_category class='form-control' %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_third_category">Third Category : </label>
+                {% render_field form.third_category class='form-control' %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_colour">Colour : </label>
+                {% render_field form.colour class='form-control' %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_size">Size : </label>
+                {% render_field form.size class='form-control' %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_store">Store : </label>
+                {% render_field form.store class='form-control' %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create</button>
+
+
+        </form>
+    </div>
+{% endif %}
 
 {# JQuery and bootstrap js scripts #}
 <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
