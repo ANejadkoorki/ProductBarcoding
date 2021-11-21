@@ -1,3 +1,4 @@
+{% load widget_tweaks %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -13,11 +14,49 @@
 </head>
 <body>
 
-<div class="container mt-4  align-content-center">
+<div class="container mt-4  col-4 align-content-center">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.media.js }}
-        {{ form.as_p }}
+
+        <div class="form-group">
+            <label for="id_name">Product Name : </label>
+            {% render_field form.name class='form-control'  %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_mother_category">Mother Category : </label>
+            {% render_field form.mother_category class='form-control'  %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_second_category">Second Category : </label>
+            {% render_field form.second_category class='form-control'  %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_third_category">Third Category : </label>
+            {% render_field form.third_category class='form-control'  %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_colour">Colour : </label>
+            {% render_field form.colour class='form-control'  %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_size">Size : </label>
+            {% render_field form.size class='form-control'  %}
+        </div>
+
+        <div class="form-group">
+            <label for="id_store">Store : </label>
+            {% render_field form.store class='form-control'  %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+
+
     </form>
 </div>
 
