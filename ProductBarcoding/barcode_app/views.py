@@ -69,3 +69,4 @@ class CreateProduct(CreateView):
             messages.success(request=self.request,
                              message=f"Product has been saved successfully with barcode: {new_obj.get_barcode()}")
             return redirect('barcode_app:create-product')
+
