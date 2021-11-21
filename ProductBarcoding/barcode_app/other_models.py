@@ -2,11 +2,11 @@ from django.db import models
 from django.core.validators import RegexValidator
 
 two_digit_validator = RegexValidator(
-    regex="/^[0-9]{1}[1-9]{1}$/gm",
+    regex="^[0-9]{1}[1-9]{1}$",
     message="the code should be matched with the correct format : 01-99",
 )
 four_digit_validator = RegexValidator(
-    regex="/^[0-9]{3}[1-9]{1}$/gm",
+    regex="^[0-9]{3}[1-9]{1}$",
     message="the code should be matched with the correct format : 0001-9999",
 )
 
@@ -22,6 +22,9 @@ class Store(models.Model):
         verbose_name="store name",
         max_length=200,
     )
+
+    def __str__(self):
+        return f"{self.name}"
 
     class Meta:
         unique_together = ['name', 'code']
@@ -49,6 +52,9 @@ class Size(models.Model):
         max_length=200,
     )
 
+    def __str__(self):
+        return f"{self.size_type}: {self.name}"
+
     class Meta:
         unique_together = ['code', 'size_type', 'name']
 
@@ -64,6 +70,9 @@ class Colour(models.Model):
         verbose_name="colour name",
         max_length=200,
     )
+
+    def __str__(self):
+        return f"{self.name}"
 
     class Meta:
         unique_together = ['name', 'code']

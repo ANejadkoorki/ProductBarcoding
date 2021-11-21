@@ -4,11 +4,11 @@ from django.core.validators import RegexValidator
 # Create your models here.
 
 two_digit_categories_validator = RegexValidator(
-    regex="/^[0-9]{1}[1-9]{1}$/gm",
+    regex="^[0-9]{1}[1-9]{1}$",
     message="the code should be matched with the correct format : 01-99",
 )
 three_digit_categories_validator = RegexValidator(
-    regex="/^[0-9]{2}[1-9]{1}$/gm",
+    regex="^[0-9]{2}[1-9]{1}$",
     message="the code should be matched with the correct format : 001-999",
 )
 
@@ -27,6 +27,9 @@ class MotherCategory(models.Model):
         verbose_name="mother category name",
         max_length=200,
     )
+
+    def __str__(self):
+        return f"{self.name} code: {self.code}"
 
     class Meta:
         unique_together = ['name', 'code']
@@ -51,6 +54,9 @@ class SecondCategory(models.Model):
         max_length=200,
     )
 
+    def __str__(self):
+        return f"{self.name}"
+
     class Meta:
         unique_together = ['name', 'code']
 
@@ -73,6 +79,9 @@ class ThirdCategory(models.Model):
         verbose_name="third category name",
         max_length=200,
     )
+
+    def __str__(self):
+        return f"{self.name}"
 
     class Meta:
         unique_together = ['name', 'code']

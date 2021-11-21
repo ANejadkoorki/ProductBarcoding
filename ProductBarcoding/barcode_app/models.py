@@ -1,10 +1,14 @@
 from django.db import models
 from django.core.validators import RegexValidator
-from .categories_models import *
-from .other_models import *
+from smart_selects.db_fields import ChainedForeignKey
+
+
+from .categories_models import MotherCategory, SecondCategory, ThirdCategory
+from .other_models import Store, Size, Colour
+
 
 five_digit_validator = RegexValidator(
-    regex="/^[0-9]{4}[1-9]{1}$/gm",
+    regex="^[0-9]{4}[1-9]{1}$",
     message="the code should be matched with the correct format : 00001-99999",
 )
 
@@ -19,9 +23,26 @@ class Product(models.Model):
         max_length=5,
     )
 
-    third_category = models.ForeignKey(
-        to=ThirdCategory,
+    mother_category = models.ForeignKey(
+        to=MotherCategory,
         on_delete=models.CASCADE,
+        null=True,
+    )
+
+    second_category = ChainedForeignKey(
+        to=SecondCategory,
+        chained_field="mother_category",
+        chained_model_field="mother_category",
+        sort=True,
+        null=True,
+    )
+
+    third_category = ChainedForeignKey(
+        to=ThirdCategory,
+        chained_field="second_category",
+        chained_model_field="second_category",
+        sort=True,
+        null=True,
     )
 
     colour = models.ForeignKey(
@@ -43,6 +64,9 @@ class Product(models.Model):
         verbose_name="product name",
         max_length=200,
     )
+
+    def __str__(self):
+        return f"{self.name}"
 
     class Meta:
         unique_together = ['name', 'code']
