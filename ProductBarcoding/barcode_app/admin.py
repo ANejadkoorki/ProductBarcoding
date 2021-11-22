@@ -1,11 +1,87 @@
 from django.contrib import admin
 from .models import *
 
+
 # Register your models here.
-admin.site.register(MotherCategory)
-admin.site.register(SecondCategory)
-admin.site.register(ThirdCategory)
-admin.site.register(Product)
-admin.site.register(Store)
-admin.site.register(Size)
-admin.site.register(Colour)
+
+@admin.register(Size)
+class SizeModelAdmin(admin.ModelAdmin):
+    """
+        Size Model Admin settings
+    """
+    list_display = [
+        'code',
+        'name',
+        'size_type',
+    ]
+
+    ordering = [
+        'code',
+    ]
+
+    list_display_links = [
+        'code',
+        'name',
+    ]
+
+    list_filter = [
+        'size_type'
+    ]
+
+    search_fields = [
+        'code',
+        'name',
+    ]
+
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    """
+        Product Model Admin settings
+    """
+
+    list_display = [
+        'code',
+        'name',
+        'barcode',
+    ]
+
+    ordering = [
+        'code',
+    ]
+
+    list_display_links = [
+        'code',
+        'name',
+    ]
+
+    search_fields = [
+        'barcode',
+        'name',
+    ]
+
+
+@admin.register(MotherCategory, SecondCategory, ThirdCategory, Colour, Store)
+class OtherModelsAdmin(admin.ModelAdmin):
+    """
+        Other Models Admin settings
+    """
+
+    list_display = [
+        'code',
+        'name',
+    ]
+
+    ordering = [
+        'code',
+    ]
+
+    list_display_links = [
+        'code',
+        'name',
+    ]
+
+    search_fields = [
+        'code',
+        'name',
+    ]

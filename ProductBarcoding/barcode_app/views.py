@@ -24,6 +24,8 @@ class CreateProduct(CreateView):
 
     def get(self, request, *args, **kwargs):
         super().get(request, *args, **kwargs)
+
+        # Product form instance
         form = forms.CreateProductForm()
 
         return render(
@@ -34,14 +36,22 @@ class CreateProduct(CreateView):
             },
         )
 
+    def form_invalid(self, form):
+        return super().form_invalid(form)
+
     def form_valid(self, form):
+        # getting form.cleaned_data
         cleaned_data = form.cleaned_data
 
+        # getting Product model last object
         prod_last_object = models.Product.objects.last()
         if prod_last_object:
+            # producing new product unique code
             last_prod_code = int(prod_last_object.code)
             new_prod_code_int = last_prod_code + 1
             new_prod_code = str(new_prod_code_int).zfill(5)
+
+            # creating new Product object
             new_obj = models.Product.objects.create(
                 code=new_prod_code,
                 mother_category=cleaned_data.get('mother_category'),
@@ -52,10 +62,20 @@ class CreateProduct(CreateView):
                 store=cleaned_data.get('store'),
                 name=cleaned_data.get('name'),
             )
-            messages.success(request=self.request,
-                             message=f"Product has been saved successfully with barcode: {new_obj.get_barcode()}")
-            return redirect('barcode_app:create-product')
+
+            # setting the new product barcode
+            barcode_saving = new_obj.set_barcode()
+            if barcode_saving:
+                messages.success(request=self.request,
+                                 message=f"Product has been saved successfully with barcode: {new_obj.get_barcode()}")
+                return redirect('barcode_app:create-product')
+            else:
+                messages.error(request=self.request,
+                               message=f"This product cannot be saved.")
+                return redirect('barcode_app:create-product')
+
         else:
+            # creating new Product object
             new_obj = models.Product.objects.create(
                 code='00001',
                 mother_category=cleaned_data.get('mother_category'),
@@ -66,7 +86,14 @@ class CreateProduct(CreateView):
                 store=cleaned_data.get('store'),
                 name=cleaned_data.get('name'),
             )
-            messages.success(request=self.request,
-                             message=f"Product has been saved successfully with barcode: {new_obj.get_barcode()}")
-            return redirect('barcode_app:create-product')
+            # setting new product barcode
+            barcode_saving = new_obj.set_barcode()
+            if barcode_saving:
+                messages.success(request=self.request,
+                                 message=f"Product has been saved successfully with barcode: {new_obj.get_barcode()}")
+                return redirect('barcode_app:create-product')
+            else:
+                messages.error(request=self.request,
+                               message=f"This product cannot be saved.")
+                return redirect('barcode_app:create-product')
 

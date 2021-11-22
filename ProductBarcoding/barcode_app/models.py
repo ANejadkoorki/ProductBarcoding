@@ -14,6 +14,15 @@ five_digit_validator = RegexValidator(
 # Create your models here.
 
 class Product(models.Model):
+    """
+        Product objects are made with this model.
+    """
+    barcode = models.CharField(
+        verbose_name="product barcode",
+        unique=True,
+        max_length=26,
+        null=True,
+    )
     code = models.CharField(
         verbose_name="product code",
         validators=[five_digit_validator],
@@ -63,12 +72,26 @@ class Product(models.Model):
         max_length=200,
     )
 
+    def set_barcode(self):
+        """
+            this method set the product barcode
+        """
+        try:
+            self.barcode = f"{self.mother_category.code}-{self.second_category.code}-{self.third_category.code}-" \
+                           f"{self.code}-{self.colour.code}-{self.size.code}-{self.store.code}"
+            self.save()
+            return True
+        except:
+            return False
+
     def get_barcode(self):
-        return f"{self.mother_category.code}-{self.second_category.code}-{self.third_category.code}-" \
-               f"{self.code}-{self.colour.code}-{self.size.code}-{self.store.code}"
+        """
+            this method return the product barcode
+        """
+        return self.barcode
 
     def __str__(self):
         return f"{self.name}"
 
     class Meta:
-        unique_together = ['name', 'code']
+        unique_together = ['name', 'code', 'barcode']

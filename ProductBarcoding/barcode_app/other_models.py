@@ -12,6 +12,9 @@ four_digit_validator = RegexValidator(
 
 
 class Store(models.Model):
+    """
+        Store objects are made with this model.
+    """
     code = models.CharField(
         verbose_name="store code",
         validators=[four_digit_validator],
@@ -31,6 +34,9 @@ class Store(models.Model):
 
 
 class Size(models.Model):
+    """
+        Size objects are made with this model.
+    """
     TYPE_CHOICES = [
         ('C', 'CLOTHING'),
         ('W', 'WEIGHT'),
@@ -60,6 +66,9 @@ class Size(models.Model):
 
 
 class Colour(models.Model):
+    """
+        Colour objects are made with this model.
+    """
     code = models.CharField(
         verbose_name="colour code",
         validators=[two_digit_validator],
@@ -77,43 +86,4 @@ class Colour(models.Model):
     class Meta:
         unique_together = ['name', 'code']
 
-# class ClothingSize(models.Model):
-#     code = models.CharField(
-#         verbose_name="clothing size code",
-#         validators=[two_digit_validator],
-#         unique=True,
-#     )
-#     name = models.CharField(
-#         verbose_name="clothing size name",
-#     )
-#
-#     class Meta:
-#         unique_together = ['name', 'code']
-#
-#
-# class WeightSize(models.Model):
-#     code = models.CharField(
-#         verbose_name="weight size code",
-#         validators=[two_digit_validator],
-#         unique=True,
-#     )
-#     name = models.CharField(
-#         verbose_name="weight size name",
-#     )
-#
-#     class Meta:
-#         unique_together = ['name', 'code']
 
-
-# class DimensionalSize(models.Model):
-#     code = models.CharField(
-#         verbose_name="dimensional size code",
-#         validators=[two_digit_validator],
-#         unique=True,
-#     )
-#     name = models.CharField(
-#         verbose_name="dimensional size name",
-#     )
-#
-#     class Meta:
-#         unique_together = ['name', 'code']

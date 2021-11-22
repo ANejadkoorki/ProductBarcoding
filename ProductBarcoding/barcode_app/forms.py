@@ -3,6 +3,9 @@ from . import models
 
 
 class CreateProductForm(forms.ModelForm):
+    """
+        Form of Product Model
+    """
     class Meta:
         model = models.Product
         fields = (

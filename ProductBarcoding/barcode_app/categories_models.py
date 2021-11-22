@@ -29,7 +29,7 @@ class MotherCategory(models.Model):
     )
 
     def __str__(self):
-        return f"{self.name} code: {self.code}"
+        return f"{self.name}"
 
     class Meta:
         unique_together = ['name', 'code']
@@ -37,7 +37,7 @@ class MotherCategory(models.Model):
 
 class SecondCategory(models.Model):
     """
-        First sub category objects are made with this model.
+        Second category objects are made with this model.
     """
     mother_category = models.ForeignKey(
         to=MotherCategory,
@@ -63,7 +63,7 @@ class SecondCategory(models.Model):
 
 class ThirdCategory(models.Model):
     """
-        Second sub category objects are made with this model.
+        Third category objects are made with this model.
     """
     second_category = models.ForeignKey(
         to=SecondCategory,
